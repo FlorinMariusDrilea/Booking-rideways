@@ -38,7 +38,6 @@ print("Passengers: " + passengers)
 	
 urlEric = baseUrl + suppliers[1] + "?pickup=" + pickup + "&dropoff=" + dropoff
 
-
 # Exception handling for each api
 try:
     requestEric = requests.get(urlEric, timeout=2)
@@ -98,7 +97,6 @@ if Dave:
         for option in optionDave:
             option['supplier'] = "Dave"
         options = options + optionDave
-
 
 # Gather all possible cars from database
 branch = {branch['car_type']:branch for branch in options}.values()
