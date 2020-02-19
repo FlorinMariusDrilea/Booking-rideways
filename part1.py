@@ -1,10 +1,13 @@
+# Libraries
 import sys
 import requests
 from operator import itemgetter
 
+# Link from where to take the api related staff
 baseUrl = "https://techtest.rideways.com/"
 suppliers = ["dave", "eric", "hef"]
 
+# Types of car
 cars = {
 	'STANDARD' : 4,
 	'EXECUTIVE' : 4,
@@ -13,11 +16,14 @@ cars = {
 	'LUXURY_PEOPLE_CARRIER' : 6,
 	'MINIBUS' : 16,
 }
+
+# Initial variables
 Dave = True
 Eric = True
 Jeff = True
 options = []
 
+# Condition to introduce information in the beggining
 if (len(sys.argv)) < 3:
 	print("Error")
 	sys.exit(0)
@@ -32,6 +38,8 @@ print("Passengers: " + passengers)
 	
 urlEric = baseUrl + suppliers[1] + "?pickup=" + pickup + "&dropoff=" + dropoff
 
+
+# Exception handling for each api
 try:
     requestEric = requests.get(urlEric, timeout=2)
     jsonEric = requestEric.json()
@@ -60,6 +68,7 @@ except (requests.exceptions.ConnectTimeout,requests.exceptions.ReadTimeout) as e
     Dave = False
 	print(e)
 
+# Error management, in case, for each api
 if useEric:
     if "Error" in jsonEric:
         print("Eric api error : " + jsonEric['error'])
@@ -91,10 +100,12 @@ if Dave:
         options = options + optionDave
 
 
+# Gather all possible cars from database
 branch = {branch['car_type']:branch for branch in options}.values()
 
 branchSorted = sorted(branch, reverse=True, key=itemgetter("price"))
 
+# Show cars and prices at the end, depending on requirements
 for option in branchSorted:
     if (int(cars[option['car_type']]) >= int(passengers)):
         print(option['car_type'] + " - " + str(option['supplier']) + " - " + str(option['price']))
