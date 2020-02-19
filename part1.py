@@ -26,12 +26,9 @@ else:
 	dropoff = sys.argv[2]
 	passengers = sys.argv[3]
 	
-print("-------QUERY INFO-------------")
 print("Pickup: " + pickup)
 print("Dropoff: " + dropoff)
 print("Passengers: " + passengers)
-print("------------------------------")
-
 	
 urlEric = baseUrl + suppliers[1] + "?pickup=" + pickup + "&dropoff=" + dropoff
 
@@ -64,7 +61,7 @@ except (requests.exceptions.ConnectTimeout,requests.exceptions.ReadTimeout) as e
 	print(e)
 
 if useEric:
-    if "error" in jsonEric:
+    if "Error" in jsonEric:
         print("Eric api error : " + jsonEric['error'])
         useEric = False
     else:
@@ -74,7 +71,7 @@ if useEric:
         options = options + optionEric
 
 if useJeff:
-    if "error" in jsonJeff:
+    if "Error" in jsonJeff:
         print("Jeff api error : " + jsonJeff['error'])
         useJeff = False
     else:
@@ -84,7 +81,7 @@ if useJeff:
         options = options + optionJeff
 
 if Dave:
-    if "error" in jsonDave:
+    if "Error" in jsonDave:
         print("Dave api error : " + jsonDave['error'])
         Dave = False
     else:
