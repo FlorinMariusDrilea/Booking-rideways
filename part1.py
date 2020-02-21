@@ -42,10 +42,12 @@ else:
 	dropoff = sys.argv[2]
 	passengers = sys.argv[3]
 	
-# print the results available
+# print the given parameters
+print("------------Parameters-----------")
 print("Pickup: " + pickup)
 print("Dropoff: " + dropoff)
 print("Passengers: " + passengers)
+print("\n")
 
 # searching through all the possible cars from all the apis
 # and keep in mind what is correct in the given order
@@ -113,6 +115,8 @@ if Dave:
 
 # go through all the options that were selected above and arrange them in ascending order
 branchSorted = sorted({branch['car_type']:branch for branch in options}.values(), reverse=True, key=get_item("price"))
+
+print("--------------Results--------------")
 
 # print all options possible in ascending order
 for option in branchSorted:
