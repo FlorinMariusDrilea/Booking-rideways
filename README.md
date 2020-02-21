@@ -1,5 +1,9 @@
 # Booking-rideways
 
+## Setup
+
+For the setup I used python with no other dependencies + in the second part I used node.js with the help of npm installation.
+
 ## Part 1 
 
 The file part1.py contains all is needed to make exercise 1 work.
