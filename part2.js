@@ -1,5 +1,5 @@
 // variables used during the app
-var { python-shell } = require('python-shell');
+var { pythonShell } = require('python-shell');
 var express = require("express");
 var app = express();
 var port = 9800;
@@ -51,7 +51,7 @@ app.get("/", (req, res) => {
     }
 
 	// send parameters from the server to the first part of the program
-    python-shell.run('part2 - working process.py', options, function(error, result) {
+    pythonShell.run('part2 - working process.py', options, function(error, result) {
         
 		if (error) {
             console.log(error)
