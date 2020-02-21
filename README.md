@@ -10,6 +10,8 @@ The file part1.py contains all is needed to make exercise 1 work.
 
 It can be run using the command prompt console and with the command : "python part1.py <pickup> <dropoff> <passengers>"
 
+Sometimes at the first part it could show some internal errors for the apis.
+
 ## Part 2
 
 For the second part I used node.js.
