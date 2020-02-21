@@ -33,47 +33,47 @@ print("Passengers: " + passengers)
 urlEric = baseUrl + suppliers[1] + "?pickup=" + pickup + "&dropoff=" + dropoff
 
 try:
-    requestEric = requests.get(urlEric, timeout=2)
+    requestEric = requests.get(urlEric, timeout=1)
     jsonEric = requestEric.json()
 except (requests.exceptions.ConnectTimeout,requests.exceptions.ReadTimeout) as e:
     print("Skipping Eric - ")
-    useEric = False
 	print(e)
+	Eric = False
 	
 urlJeff = baseUrl + suppliers[2] + "?pickup=" + pickup + "&dropoff=" + dropoff
 
 try:
-    requestJeff = requests.get(urlJeff, timeout=2)
+    requestJeff = requests.get(urlJeff, timeout=1)
     jsonJeff = requestJeff.json()
 except (requests.exceptions.ConnectTimeout,requests.exceptions.ReadTimeout) as e:
     print("Skipping supplier Jeff - ")
-	useJeff = False
-    print(e)
+	print(e)
+	Jeff = False
 
 urlDave = baseUrl + suppliers[0] + "?pickup=" + pickup + "&dropoff=" + dropoff
 
 try:
-    requestDave = requests.get(urlDave, timeout=2)
+    requestDave = requests.get(urlDave, timeout=1)
     jsonDave = requestDave.json()
 except (requests.exceptions.ConnectTimeout,requests.exceptions.ReadTimeout) as e:
     print("Skipping Dave - ")
-    Dave = False
 	print(e)
+	Dave = False
 
-if useEric:
+if Eric):
     if "error" in jsonEric:
         print("Eric api error : " + jsonEric['error'])
-        useEric = False
+        Eric = False
     else:
         optionEric = jsonEric['options']
         for option in optionEric:
             option['supplier'] = "Eric"
         options = options + optionEric
 
-if useJeff:
+if Jeff:
     if "error" in jsonJeff:
         print("Jeff api error : " + jsonJeff['error'])
-        useJeff = False
+        Jeff = False
     else:
         optionJeff = jsonJeff['options']
         for option in optionJeff:
