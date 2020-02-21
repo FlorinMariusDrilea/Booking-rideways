@@ -25,36 +25,26 @@ else:
     dropoff = sys.argv[2]
     passengers = sys.argv[3]
 
-formedUrlDave = baseUrl + suppliers[0] + "?pickup=" + pickup + "&dropoff=" + dropoff
-try:
-    requestDave = requests.get(formedUrlDave, timeout=2)
-    jsonDave = requestDave.json()
-except (requests.exceptions.ConnectTimeout,requests.exceptions.ReadTimeout) as e:
-    Dave = False
-
-
 formedUrlEric = baseUrl + suppliers[1] + "?pickup=" + pickup + "&dropoff=" + dropoff
 try:
-    requestEric = requests.get(formedUrlEric, timeout=2)
+    requestEric = requests.get(formedUrlEric, timeout=1)
     jsonEric = requestEric.json()
 except (requests.exceptions.ConnectTimeout,requests.exceptions.ReadTimeout) as e:
     Eric = False
 
+formedUrlDave = baseUrl + suppliers[0] + "?pickup=" + pickup + "&dropoff=" + dropoff
+try:
+    requestDave = requests.get(formedUrlDave, timeout=1)
+    jsonDave = requestDave.json()
+except (requests.exceptions.ConnectTimeout,requests.exceptions.ReadTimeout) as e:
+    Dave = False
+
 formedUrlJeff = baseUrl + suppliers[2] + "?pickup=" + pickup + "&dropoff=" + dropoff
 try:
-    requestJeff = requests.get(formedUrlJeff, timeout=2)
+    requestJeff = requests.get(formedUrlJeff, timeout=1)
     jsonJeff = requestJeff.json()
 except (requests.exceptions.ConnectTimeout,requests.exceptions.ReadTimeout) as e:
     Jeff = False
-
-if Dave:
-    if "error" in jsonDave:
-        Dave = False
-    else:
-        optionsDave = jsonDave['options']
-        for option in optionsDave:
-            option['supplier'] = "Dave"
-        options = options + optionsDave
 
 if Eric:
     if "error" in jsonEric:
@@ -64,6 +54,15 @@ if Eric:
         for option in optionsEric:
             option['supplier'] = "Eric"
         options = options + optionsEric
+
+if Dave:
+    if "error" in jsonDave:
+        Dave = False
+    else:
+        optionsDave = jsonDave['options']
+        for option in optionsDave:
+            option['supplier'] = "Dave"
+        options = options + optionsDave
 
 if Jeff:
     if "error" in jsonJeff:
