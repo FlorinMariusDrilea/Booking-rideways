@@ -1,5 +1,5 @@
 // variables used during the app
-var { pythonShell } = require('python-shell');
+var { PythonShell } = require('python-shell');
 var express = require("express");
 var app = express();
 var port = 9800;
@@ -51,15 +51,15 @@ app.get("/", (req, res) => {
     }
 
 	// send parameters from the server to the first part of the program
-    pythonShell.run('part2 - working process.py', options, function(error, result) {
+    PythonShell.run('part2Process.py', options, function(err, results) {
         
-		if (error) {
-            console.log(error)
+		if (err) {
+            console.log(err)
         }
 
-        result = result.map(toJSON);
-        if (result.length >= 1){
-            return res.json({ result });
+        results = results.map(toJSON);
+        if (results.length >= 1){
+            return res.json({ results });
         } else {
             return res.json({Empty:"Nothing found. Sorry!"});
         }
