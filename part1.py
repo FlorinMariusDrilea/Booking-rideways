@@ -1,10 +1,9 @@
 # libraries
 import sys
 import requests
-from operator import itemgetter
 
 # get the api
-baseUrl = "https://techtest.rideways.com/"
+url = "https://techtest.rideways.com/"
 suppliers = ["dave", "eric", "jeff"]
 
 # all possible cars + number of people
@@ -23,6 +22,17 @@ Eric = True
 Jeff = True
 options = []
 
+# functions
+def get_item(*items):
+    if len(items) == 1:
+        item = items[0]
+        def o(obj):
+            return obj[item]
+    else:
+        def o(obj):
+            return tuple(obj[item] for item in items)
+    return o
+
 # error if not all parameteres are inserted
 if (len(sys.argv)) < 3:
 	print("Error")
@@ -32,14 +42,14 @@ else:
 	dropoff = sys.argv[2]
 	passengers = sys.argv[3]
 	
+# print the results available
 print("Pickup: " + pickup)
 print("Dropoff: " + dropoff)
 print("Passengers: " + passengers)
 
 # searching through all the possible cars from all the apis
 # and keep in mind what is correct in the given order
-
-urlEric = baseUrl + suppliers[1] + "?pickup=" + pickup + "&dropoff=" + dropoff
+urlEric = url + suppliers[1] + "?pickup=" + pickup + "&dropoff=" + dropoff
 
 try:
     requestEric = requests.get(urlEric, timeout=1)
@@ -49,7 +59,7 @@ except (requests.exceptions.ConnectTimeout,requests.exceptions.ReadTimeout) as e
 	print(e)
 	Eric = False
 	
-urlJeff = baseUrl + suppliers[2] + "?pickup=" + pickup + "&dropoff=" + dropoff
+urlJeff = url + suppliers[2] + "?pickup=" + pickup + "&dropoff=" + dropoff
 
 try:
     requestJeff = requests.get(urlJeff, timeout=1)
@@ -59,7 +69,7 @@ except (requests.exceptions.ConnectTimeout,requests.exceptions.ReadTimeout) as e
 	print(e)
 	Jeff = False
 
-urlDave = baseUrl + suppliers[0] + "?pickup=" + pickup + "&dropoff=" + dropoff
+urlDave = url + suppliers[0] + "?pickup=" + pickup + "&dropoff=" + dropoff
 
 try:
     requestDave = requests.get(urlDave, timeout=1)
@@ -101,12 +111,8 @@ if Dave:
             option['supplier'] = "Dave"
         options = options + optionDave
 
-
-# go through all the options that were selected above
-branch = {branch['car_type']:branch for branch in options}.values()
-
-# arrange them in ascending order
-branchSorted = sorted(branch, reverse=True, key=itemgetter("price"))
+# go through all the options that were selected above and arrange them in ascending order
+branchSorted = sorted({branch['car_type']:branch for branch in options}.values(), reverse=True, key=get_item("price"))
 
 # print all options possible in ascending order
 for option in branchSorted:
