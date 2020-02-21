@@ -9,28 +9,16 @@ app.listen(port, () => {
     console.log("Server on port", port);
 });
 
-// transform the result into json form
-function toJSON(result) {
-    var splitting = result.split('-')
-    var trimming = splitting.map(result => result.trim())
-
-    return {
-        car_type: trimming[0],
-        supplier: trimming[1],
-        price: parseInt(trimming[2])
-    }
-}
-
 // verify the parameters that are entered
 function verify(pickup, dropoff, passengers) {
     var error = [];
-    if (dropoff == null){
+    if (dropoff == ""){
         error.push("dropoff cannot be empty")
     }
-	if (pickup == null){
+	if (pickup == ""){
         error.push("pickup cannot be empty")
     }
-    if (passengers == null){
+    if (passengers == ""){
         error.push("passengers cannot be empty")
     } else if (isNaN(passengers)) {
         error.push("passengers value must be a number")
@@ -56,8 +44,8 @@ app.get("/", (req, res) => {
 		if (err) {
             console.log(err)
         }
-
-        results = results.map(toJSON);
+		// transform into JSON form
+        results = JSON.stringify(results);
         if (results.length >= 1){
             return res.json({ results });
         } else {
